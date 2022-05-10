@@ -1,17 +1,5 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include "cars.h"
-#include "csvreader.h"
-#include "QString"
-#include <QDebug>
-#include "writer.h"
-#include "mybrowser.h"
-#include <iostream>
-#include <string>
-#include <QFileDialog>
-#include <QMessageBox>
-#include "jsonreader.h"
-#include "abstractreader.h"
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -30,8 +18,12 @@ MainWindow::~MainWindow()
 }
 void MainWindow::read_file(AbstractReader &rd)
 {
-    if (rd.is_open()){}
-
+    if (rd.is_open())
+{
+  cars = rd.readAll();
+ } else {
+        ui->textBrowser->RedText("Не смог открыть файл!");
+    }
 }
 
 void MainWindow::findCars()
@@ -64,28 +56,26 @@ void MainWindow::addCars()
 void MainWindow::openCars()
 {
     QString file_name = QFileDialog::getOpenFileName(this,"Open a file");
-    QMessageBox::information(this,"..",file_name);
-    if (ui->typeSelect->currentText() == "CSV")
+    if(file_name != "") {
+    if (file_name.toStdString().find(".csv") != -1)
     {
         // открытие файла csv
         CSVReader csv(file_name);
         read_file(csv);
-              if (csv.is_open())
-      {
 
-            cars = csv.readAll();
-        }
     }
-    if (ui->typeSelect->currentText() == "JSON")
+    else if (file_name.toStdString().find(".json") != -1)
     {
         // открытие файла JSON
         JSONReader json(file_name);
         read_file(json);
-             if (json.is_open())
-       {
-           cars = json.readAll();
-       }
+
+    }
+    else ui->textBrowser->RedText("Вы выбрали не читаемые файлы!");
+
+        } else {
+            ui->textBrowser->RedText("Вы не выбрали откуда читать текст!");
+        }
     }
 
-}
 

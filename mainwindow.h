@@ -1,12 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "ui_mainwindow.h"
+#include "cars.h"
+#include "csvreader.h"
+#include "QString"
+#include <QDebug>
+#include "writer.h"
+#include "mybrowser.h"
+#include <iostream>
+#include <string>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "jsonreader.h"
 #include "abstractreader.h"
-#include <QMainWindow>
-#include <cars.h>
-#include "QString"
-#include "cars.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
